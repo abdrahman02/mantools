@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, FileText, ThumbsUp } from "lucide-react";
+import { ChevronRight, FileText, LucideProps, ThumbsUp } from "lucide-react";
 
 import * as React from "react";
 
@@ -23,23 +23,40 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const navMain = [
+interface subNavMain {
+  title: string;
+  url: string;
+  isActive?: boolean;
+}
+
+interface navMain {
+  title: string;
+  url: string;
+  icon: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
+  items: subNavMain[];
+}
+
+const navMain: navMain[] = [
   {
     title: "Text & Document",
     url: "#",
     icon: FileText,
-    isActive: false,
     items: [
       {
         title: "Text Formatter",
-        url: "#",
+        url: "/text-formatter",
       },
     ],
   },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -66,14 +83,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Collapsible
                 key={item.title}
                 asChild
-                defaultOpen={item.isActive}
+                defaultOpen={item.items?.some((itm) => itm.url === pathname)}
                 className="group/collapsible"
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton
-                      className="data-[state=open]:bg-main data-[state=open]:outline-border data-[state=open]:text-main-foreground"
+                      className={`data-[state=open]:bg-main data-[state=open]:outline-border data-[state=open]:text-main-foreground`}
                       tooltip={item.title}
+                      isActive={item.items?.some((itm) => itm.url === pathname)}
                     >
                       {item.icon && <item.icon />}
                       <span>{item.title}</span>
@@ -84,7 +102,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
+                          <SidebarMenuSubButton
+                            isActive={subItem.url === pathname}
+                            asChild
+                          >
                             <a href={subItem.url}>
                               <span>{subItem.title}</span>
                             </a>
