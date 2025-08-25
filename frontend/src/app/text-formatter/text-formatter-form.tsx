@@ -11,6 +11,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useAlertMessage } from "@/hooks/use-alert-message";
 import { useGlobalDialog } from "@/hooks/use-global-dialog";
 import { FormEvent, useState } from "react";
 
@@ -27,6 +28,7 @@ export default function TextFormatterForm() {
     const [result, setResult] = useState("");
 
     const { isLoading, showDialog, hideDialog } = useGlobalDialog();
+    const { createAlert } = useAlertMessage();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -44,11 +46,17 @@ export default function TextFormatterForm() {
                 },
             );
 
-            const { content } = await res.json();
-            setResult(content.data);
+            const { status, content, message } = await res.json();
+            if (status !== 200) {
+                showDialog("error");
+            }
+
+            setResult(content?.data);
+            createAlert(status, message);
         } catch (err) {
             console.error(err);
             showDialog("error");
+            createAlert(500, "Something went wrong");
         } finally {
             setTimeout(() => {
                 hideDialog();
@@ -74,8 +82,12 @@ export default function TextFormatterForm() {
                         <SelectGroup>
                             <SelectItem value="json">JSON</SelectItem>
                             <SelectItem value="xml">XML</SelectItem>
-                            <SelectItem value="sql">SQL</SelectItem>
-                            <SelectItem value="markdown">Markdown</SelectItem>
+                            <SelectItem value="sql" disabled>
+                                SQL
+                            </SelectItem>
+                            <SelectItem value="markdown" disabled>
+                                Markdown
+                            </SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
@@ -98,7 +110,15 @@ export default function TextFormatterForm() {
                         />
                     </CardContent>
                     <CardFooter className="flex flex-row justify-between items-center">
-                        <Button className="bg-white">Clear</Button>
+                        <Button
+                            type="button"
+                            onClick={() =>
+                                setForm((prev) => ({ ...prev, input: "" }))
+                            }
+                            className="bg-white"
+                        >
+                            Clear
+                        </Button>
                         <Button type="submit">Submit</Button>
                     </CardFooter>
                 </Card>

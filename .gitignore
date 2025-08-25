@@ -37,3 +37,44 @@ frontend/out/
 ## typescript
 /frontend/*.tsbuildinfo
 /frontend/next-env.d.ts
+
+# BACKEND
+## Binaries hasil build Go
+/backend/*.exe
+/backend/*.exe~
+/backend/*.dll
+/backend/*.so
+/backend/*.dylib
+/backend/*.test
+/backend/*.out
+
+## Folder binary hasil go build
+/backend/bin/
+/backend/build/
+/backend/dist/
+
+## Cache Go
+/backend/*.log
+/backend/*.cache
+/backend/*.tmp
+/backend/*.swp
+/backend/*.swo
+/backend/*.DS_Store
+
+## Dependency Go module
+/backend/vendor/
+
+## Environment & Config
+/backend/.env
+/backend/.env.*
+/backend/config.yaml
+/backend/config.json
+
+## IDE & Editor
+/backend/.vscode/
+/backend/.idea/
+/backend/*.iml
+
+## OS-specific
+/backend.DS_Store
+/backendThumbs.db
