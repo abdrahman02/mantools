@@ -50,6 +50,10 @@ const navMain: navMain[] = [
         title: "Text Formatter",
         url: "/text-formatter",
       },
+      {
+        title: "Text Case Converter",
+        url: "/text-case-converter",
+      },
     ],
   },
 ];
