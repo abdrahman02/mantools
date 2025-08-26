@@ -15,13 +15,13 @@ import { useAlertMessage } from "@/hooks/use-alert-message";
 import { useGlobalDialog } from "@/hooks/use-global-dialog";
 import { FormEvent, useState } from "react";
 
-interface TextFormatterRequest {
+interface TextCaseConverterRequest {
     input: string;
     format: string;
 }
 
-export default function TextFormatterForm() {
-    const [form, setForm] = useState<TextFormatterRequest>({
+export default function TextCaseConverterForm() {
+    const [form, setForm] = useState<TextCaseConverterRequest>({
         input: "",
         format: "",
     });
@@ -36,7 +36,7 @@ export default function TextFormatterForm() {
 
         try {
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/text-formatter`,
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/text-case-converter`,
                 {
                     method: "POST",
                     headers: {
@@ -80,13 +80,10 @@ export default function TextFormatterForm() {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectItem value="json">JSON</SelectItem>
-                            <SelectItem value="xml">XML</SelectItem>
-                            <SelectItem value="sql" disabled>
-                                SQL
-                            </SelectItem>
-                            <SelectItem value="markdown" disabled>
-                                Markdown
+                            <SelectItem value="uppercase">UPPERCASE</SelectItem>
+                            <SelectItem value="lowercase">lowercase</SelectItem>
+                            <SelectItem value="capitalize">
+                                Capitalize
                             </SelectItem>
                         </SelectGroup>
                     </SelectContent>
