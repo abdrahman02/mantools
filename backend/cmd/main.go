@@ -2,7 +2,6 @@ package main
 
 import (
 	"backend/configs"
-	"backend/handler"
 	"backend/routes"
 	"fmt"
 	"net/http"
@@ -33,7 +32,7 @@ func main() {
 	// load .env
 	config := configs.LoadConfig()
 
-	router.POST("/text-formatter", handler.TextFormatHandler)
+	routes.RegisterTextFormatRoutes(router)
 	routes.RegisterTextCaseConvRoutes(router)
 
 	port := config.DomainConfig.Port
