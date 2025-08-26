@@ -1,0 +1,37 @@
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Build dirs
+bin/
+build/
+dist/
+tmp/
+testdata/
+
+# Cache & logs
+*.log
+*.cache
+*.tmp
+*.swp
+*.swo
+
+# Vendor (use go mod instead)
+vendor/
+
+# Env & config
+.env
+.env.*
+config.yaml
+config.json
+
+# IDE & misc
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
