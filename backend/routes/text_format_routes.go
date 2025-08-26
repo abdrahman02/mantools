@@ -12,6 +12,6 @@ func RegisterTextFormatRoutes(router *gin.Engine) {
 	textFormatterHandler := handler.NewTextFormatterHandler(textFormatterService)
 	routerGroup := router.Group("/text-formatter")
 	{
-		routerGroup.POST("/", textFormatterHandler.TextFormatter)
+		routerGroup.POST("", textFormatterHandler.TextFormatter)
 	}
 }
