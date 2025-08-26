@@ -1,4 +1,28 @@
-# FRONTEND
+# ================================
+# GLOBAL IGNORE
+# ================================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Editor / IDE
+.vscode/
+.idea/
+*.iml
+
+# Env & Config
+.env
+.env.*
+*.local
+config.yaml
+config.json
+
+# ================================
+# FRONTEND (Next.js)
+# ================================
 ## dependencies
 /frontend/node_modules
 /frontend/.pnp
@@ -14,8 +38,7 @@
 
 ## next.js
 /frontend/.next/
-frontend/out/
-
+/frontend/out/
 /frontend/build
 
 ## misc
@@ -38,7 +61,9 @@ frontend/out/
 /frontend/*.tsbuildinfo
 /frontend/next-env.d.ts
 
-# BACKEND
+# ================================
+# BACKEND (Go Gin)
+# ================================
 ## Binaries hasil build Go
 /backend/*.exe
 /backend/*.exe~
@@ -52,6 +77,8 @@ frontend/out/
 /backend/bin/
 /backend/build/
 /backend/dist/
+backend/tmp/
+backend/testdata/
 
 ## Cache Go
 /backend/*.log
