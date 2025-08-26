@@ -1,13 +1,41 @@
 package service
 
 import (
+	"backend/entities/textformat"
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
+	"errors"
+	"fmt"
 	"strings"
 )
 
-func FormatJSON(input string) (string, error) {
+type TextFormatterService interface {
+	TextFormatter(req *textformat.FormatRequest) (string, error)
+}
+
+type textFormaterService struct {}
+
+func NewTextFormatterService() TextFormatterService {
+	return &textFormaterService{}
+}
+
+func (s *textFormaterService) TextFormatter (req *textformat.FormatRequest) (string, error) {
+	var formatted string
+	switch req.Format{
+	case "json":
+		formatted, _ = formatJSON(req.Input)
+	case "xml":
+		formatted, _ = formatXML(req.Input)
+	default:
+		formatted = req.Input
+		return formatted, errors.New(fmt.Sprintf("%s format is unsupported yet", req.Format))
+	}
+
+	return formatted, nil
+}
+
+func formatJSON(input string) (string, error) {
 	var buf bytes.Buffer
 	var obj interface{}
 	dec := json.NewDecoder(strings.NewReader(input))
@@ -25,7 +53,7 @@ func FormatJSON(input string) (string, error) {
 	return strings.TrimRight(buf.String(), "\n"), nil
 }
 
-func FormatXML(input string) (string, error) {
+func formatXML(input string) (string, error) {
 	decoder := xml.NewDecoder(strings.NewReader(input))
 	var out bytes.Buffer
 	indent := 0
