@@ -13,7 +13,7 @@ func simpleCors() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		ctx.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		ctx.Writer.Header().Set("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
-		ctx.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		ctx.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization")
 		if ctx.Request.Method == http.MethodOptions {
 			ctx.AbortWithStatus(http.StatusNoContent)
 			return
@@ -34,6 +34,7 @@ func main() {
 
 	routes.RegisterTextFormatRoutes(router)
 	routes.RegisterTextCaseConvRoutes(router)
+	routes.RegisterImagesCompressRoutes(router)
 
 	port := config.DomainConfig.Port
 	fmt.Printf("🚀 Server running on port %d\n", port)
