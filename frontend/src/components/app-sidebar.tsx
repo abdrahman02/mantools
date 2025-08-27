@@ -1,6 +1,12 @@
 "use client";
 
-import { ChevronRight, FileText, LucideProps, ThumbsUp } from "lucide-react";
+import {
+  ChevronRight,
+  FileText,
+  Image,
+  LucideProps,
+  ThumbsUp,
+} from "lucide-react";
 
 import * as React from "react";
 
@@ -53,6 +59,17 @@ const navMain: navMain[] = [
       {
         title: "Text Case Converter",
         url: "/text-case-converter",
+      },
+    ],
+  },
+  {
+    title: "Image & Media",
+    url: "#",
+    icon: Image,
+    items: [
+      {
+        title: "Images Compressor",
+        url: "/images-compressor",
       },
     ],
   },
@@ -110,9 +127,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             isActive={subItem.url === pathname}
                             asChild
                           >
-                            <a href={subItem.url}>
+                            <Link href={subItem.url}>
                               <span>{subItem.title}</span>
-                            </a>
+                            </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}
