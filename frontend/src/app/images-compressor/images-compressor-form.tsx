@@ -118,7 +118,7 @@ export default function ImagesCompressorForm() {
                             <Input
                                 id="images"
                                 type="file"
-                                accept="image/*"
+                                accept="image/jpeg, image/png"
                                 multiple
                                 onChange={(e) =>
                                     setForm((prev) => ({
