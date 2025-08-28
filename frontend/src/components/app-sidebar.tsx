@@ -71,6 +71,10 @@ const navMain: navMain[] = [
         title: "Images Compressor",
         url: "/images-compressor",
       },
+      {
+        title: "Images Converter",
+        url: "/images-converter",
+      },
     ],
   },
 ];
