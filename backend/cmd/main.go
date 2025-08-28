@@ -35,6 +35,7 @@ func main() {
 	routes.RegisterTextFormatRoutes(router)
 	routes.RegisterTextCaseConvRoutes(router)
 	routes.RegisterImagesCompressRoutes(router)
+	routes.RegisterImagesConverterRoutes(router)
 
 	port := config.DomainConfig.Port
 	fmt.Printf("🚀 Server running on port %d\n", port)
