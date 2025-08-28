@@ -5,7 +5,10 @@ import (
 	"backend/entities/imagescompress"
 	"bytes"
 	"fmt"
+	"log"
+	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/disintegration/imaging"
 )
@@ -21,6 +24,8 @@ func NewImagesCompressService() ImagesCompressService {
 }
 
 func (s *imagesCompressService) ImagesCompress(req *imagescompress.FormatRequest) (*bytes.Buffer, error) {
+	const outDir = "images_compressed/"
+
 	quality, err := strconv.Atoi(req.Quality)
 	if err != nil {
 		return nil, err
@@ -28,36 +33,49 @@ func (s *imagesCompressService) ImagesCompress(req *imagescompress.FormatRequest
 
 	buf := new(bytes.Buffer)
 	zipWriter := zip.NewWriter(buf)
+	defer zipWriter.Close()
 
+	var failedFiles []string
 	for _, file := range req.Files {
-		fmt.Println("filename: ", file.Filename)
 		src, err := file.Open()
 		if err != nil {
-			fmt.Println("skipping file: ", file.Filename)
+			failedFiles = append(failedFiles, file.Filename)
+			log.Println(fmt.Sprintf("Failed to open file: %s", file.Filename), err)
 			continue
 		}
-		defer src.Close()
 
 		img, err := imaging.Decode(src)
+		src.Close()
 		if err != nil {
-			fmt.Println("skipping file: ", file.Filename)
+			failedFiles = append(failedFiles, file.Filename)
+			log.Println(fmt.Sprintf("Failed to convert to object image for file: %s", file.Filename), err)
 			continue
 		}
 
-		fw, err := zipWriter.Create(file.Filename)
+		/**
+		* 1. Split and get file name without dot and ext
+		* 2. create new filename
+		*/
+		baseFilename := strings.TrimSuffix(file.Filename, filepath.Ext(file.Filename))
+		newFilename := baseFilename + ".jpeg"
+		fw, err := zipWriter.Create(outDir + newFilename)
 		if err != nil {
-			fmt.Println("skipping file: ", file.Filename)
+			failedFiles = append(failedFiles, file.Filename)
+			log.Println(fmt.Sprintf("Failed to make entry space zip for file: %s", file.Filename), err)
 			continue
 		}
 
 		err = imaging.Encode(fw, img, imaging.JPEG, imaging.JPEGQuality(quality))
 		if err != nil {
-			fmt.Println("skipping file: ", file.Filename)
+			failedFiles = append(failedFiles, file.Filename)
+			log.Println(fmt.Sprintf("Failed to compress image for file: %s", file.Filename), err)
 			continue
 		}
 	}
 
-	zipWriter.Close()
+	if len(failedFiles) > 0 {
+		return buf, fmt.Errorf("invalid file(s): %v", strings.Join(failedFiles, ", "))
+	}
 
 	return buf, err
 }

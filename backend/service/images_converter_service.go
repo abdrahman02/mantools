@@ -17,8 +17,6 @@ import (
 	"github.com/disintegration/imaging"
 )
 
-const outDir = "images_converted/"
-
 type ImagesConverterService interface {
 	ImagesConvert(req *imagesconverter.FormatRequest) (*bytes.Buffer, error)
 }
@@ -30,6 +28,8 @@ func NewImagesConverterService() ImagesConverterService {
 }
 
 func (s imagesConverterService) ImagesConvert(req *imagesconverter.FormatRequest) (*bytes.Buffer, error) {
+	const outDir = "images_converted/"
+
 	buf := new(bytes.Buffer)
 	zipWriter := zip.NewWriter(buf)
 	defer zipWriter.Close()
