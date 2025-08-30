@@ -4,14 +4,15 @@ import (
 	"backend/configs"
 	"backend/routes"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-func simpleCors() gin.HandlerFunc {
+func simpleCors(config configs.Config) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		ctx.Writer.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%v", config.DomainConfig.FrontendBaseURL))
 		ctx.Writer.Header().Set("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
 		ctx.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization")
 		if ctx.Request.Method == http.MethodOptions {
@@ -23,21 +24,24 @@ func simpleCors() gin.HandlerFunc {
 }
 
 func main() {
-	router := gin.Default()
-
-	router.Use(gin.Logger())
-	router.Use(gin.Recovery())
-	router.Use(simpleCors())
-
 	// load .env
 	config := configs.LoadConfig()
+	router := gin.Default()
+	if err := router.SetTrustedProxies(nil); err != nil {
+		log.Fatalf("Failed to set trusted proxies: %v", err)
+	}
+
+	router.Use(simpleCors(config))
 
 	routes.RegisterTextFormatRoutes(router)
 	routes.RegisterTextCaseConvRoutes(router)
 	routes.RegisterImagesCompressRoutes(router)
 	routes.RegisterImagesConverterRoutes(router)
+	routes.RegisterQRGeneratorRoutes(router)
 
 	port := config.DomainConfig.Port
-	fmt.Printf("🚀 Server running on port %d\n", port)
-	router.Run(fmt.Sprintf(":%d", port))
+	log.Printf("🚀 Server running on port %d\n", port)
+	if err := router.Run(fmt.Sprintf(":%d", port)); err != nil {
+		log.Println("Something went wrong: ", err)
+	}
 }

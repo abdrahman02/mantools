@@ -22,14 +22,14 @@ func (h ImagesCompressHandler) ImagesCompress(ctx *gin.Context) {
 	var req imagescompress.FormatRequest
 	if err := ctx.ShouldBind(&req); err != nil {
 		log.Println("Invalid request", err)
-		helper.BadRequestResponse(ctx, "Invalid request", err)
+		helper.BadRequestResponse(ctx, "Invalid request", err.Error())
 		return
 	}
 
  	result, err := h.service.ImagesCompress(&req)
  	if err != nil || result == nil {
 		log.Println("Failed to compress your files", err)
- 		helper.BadRequestResponse(ctx, "Failed to compress your files", err)
+ 		helper.BadRequestResponse(ctx, "Failed to compress your files", err.Error())
  		return
  	}
 

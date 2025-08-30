@@ -25,7 +25,7 @@ func (h TextFormatterHandler) TextFormatter(ctx *gin.Context) {
 
 	result, err := h.service.TextFormatter(&req)
 	if err != nil {
-		helper.BadRequestResponse(ctx, "Target format is unsupported yet", err)
+		helper.BadRequestResponse(ctx, "Target format is unsupported yet", err.Error())
 		return
 	}
 

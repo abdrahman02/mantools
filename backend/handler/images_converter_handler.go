@@ -22,18 +22,18 @@ func (h ImageConverterHandler) ImagesConvert(ctx *gin.Context) {
 	var req imagesconverter.FormatRequest
 	if err := ctx.ShouldBind(&req); err != nil {
 		log.Println("Invalid request", err)
-		helper.BadRequestResponse(ctx, "Invalid request", err)
+		helper.BadRequestResponse(ctx, "Invalid request", err.Error())
 		return
 	}
 
 	result, err := h.service.ImagesConvert(&req)
 	if result == nil || err != nil {
 		log.Println("Failed to convert your files", err)
-		helper.BadRequestResponse(ctx, "Failed to convert your files", err)
+		helper.BadRequestResponse(ctx, "Failed to convert your files", err.Error())
 		return
 	}
 
- 	ctx.Header("X-Message", "Compressed successfully!")
+ 	ctx.Header("X-Message", "Convert is successfully!")
  	ctx.Header("Content-Disposition", "attachment; filename=images_converted.zip")
 	ctx.Header("Access-Control-Expose-Headers", "Content-Disposition, X-Message")
 	ctx.Header("Content-Type", "application/zip")
