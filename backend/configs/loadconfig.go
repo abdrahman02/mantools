@@ -1,16 +1,15 @@
 package configs
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"strconv"
-
-	"github.com/joho/godotenv"
 )
 
 type domainConfig struct {
 	Host string
 	Port int
+	FrontendBaseURL string
 }
 
 type Config struct {
@@ -18,22 +17,26 @@ type Config struct {
 }
 
 func LoadConfig() Config {
-	if err := godotenv.Load(); err != nil {
-		fmt.Println("File .env is not found!, using system environment")
-	}
-
-	portStr := os.Getenv("PORT")
-
-	port, err := strconv.Atoi(portStr)
-	if err != nil {
-		fmt.Printf("Invalid PORT value: %s, defaulting to 8080\n", portStr)
-		port = 8080
-	}
-
+	port := getEnvAsInt("PORT", 8080)
 	return Config{
 		DomainConfig: domainConfig{
 			Host: os.Getenv("HOST"),
 			Port: port,
+			FrontendBaseURL: os.Getenv("FRONTEND_BASE_URL"),
 		},
 	}
+}
+
+func getEnvAsInt(key string, defaultValue int) int {
+	valStr := os.Getenv(key)
+	if valStr == "" {
+		return defaultValue
+	}
+	val, err := strconv.Atoi(valStr)
+	if err != nil {
+		log.Printf("Invalid value for %s: %s, using default %d", key, valStr, defaultValue)
+		return defaultValue
+	}
+
+	return val
 }

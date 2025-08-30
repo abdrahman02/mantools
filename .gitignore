@@ -77,8 +77,8 @@ config.json
 /backend/bin/
 /backend/build/
 /backend/dist/
-backend/tmp/
-backend/testdata/
+/backend/tmp/
+/backend/testdata/
 
 ## Cache Go
 /backend/*.log
@@ -96,6 +96,10 @@ backend/testdata/
 /backend/.env.*
 /backend/config.yaml
 /backend/config.json
+/backend/configs/.env
+/backend/configs/.env.*
+/backend/configs/config.yaml
+/backend/configs/config.json
 
 ## IDE & Editor
 /backend/.vscode/

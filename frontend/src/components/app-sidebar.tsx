@@ -75,6 +75,10 @@ const navMain: navMain[] = [
         title: "Images Converter",
         url: "/images-converter",
       },
+      {
+        title: "QR Generator",
+        url: "/qr-generator",
+      },
     ],
   },
 ];
