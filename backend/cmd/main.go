@@ -39,6 +39,7 @@ func main() {
 	routes.RegisterImagesConverterRoutes(router)
 	routes.RegisterQRGeneratorRoutes(router)
 	routes.RegisterApiRequestTesterRoutes(router)
+	routes.RegisterJWTDecoderRoutes(router)
 
 	port := config.DomainConfig.Port
 	log.Printf("🚀 Server running on port %d\n", port)
