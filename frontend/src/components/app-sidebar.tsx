@@ -2,6 +2,7 @@
 
 import {
   ChevronRight,
+  Database,
   FileText,
   Image,
   LucideProps,
@@ -81,6 +82,17 @@ const navMain: navMain[] = [
       },
     ],
   },
+  {
+    title: "Developer Tools",
+    url: "#",
+    icon: Database,
+    items: [
+      {
+        title: "API Request Tester",
+        url: "/api-request-tester",
+      },
+    ],
+  },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -112,7 +124,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Collapsible
                 key={item.title}
                 asChild
-                defaultOpen={item.items?.some((itm) => itm.url === pathname)}
+                // defaultOpen={item.items?.some((itm) => itm.url === pathname)}
+                defaultOpen={true}
                 className="group/collapsible"
               >
                 <SidebarMenuItem>
