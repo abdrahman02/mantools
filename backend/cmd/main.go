@@ -38,6 +38,7 @@ func main() {
 	routes.RegisterImagesCompressRoutes(router)
 	routes.RegisterImagesConverterRoutes(router)
 	routes.RegisterQRGeneratorRoutes(router)
+	routes.RegisterApiRequestTesterRoutes(router)
 
 	port := config.DomainConfig.Port
 	log.Printf("🚀 Server running on port %d\n", port)

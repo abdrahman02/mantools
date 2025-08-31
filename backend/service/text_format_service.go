@@ -24,7 +24,7 @@ func (s *textFormaterService) TextFormatter (req *textformat.FormatRequest) (str
 	var formatted string
 	switch req.Format{
 	case "json":
-		formatted, _ = formatJSON(req.Input)
+		formatted, _ = FormatJSON(req.Input)
 	case "xml":
 		formatted, _ = formatXML(req.Input)
 	default:
@@ -35,7 +35,7 @@ func (s *textFormaterService) TextFormatter (req *textformat.FormatRequest) (str
 	return formatted, nil
 }
 
-func formatJSON(input string) (string, error) {
+func FormatJSON(input string) (string, error) {
 	var buf bytes.Buffer
 	var obj interface{}
 	dec := json.NewDecoder(strings.NewReader(input))
