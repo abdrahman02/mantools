@@ -91,6 +91,10 @@ const navMain: navMain[] = [
         title: "API Request Tester",
         url: "/api-request-tester",
       },
+      {
+        title: "JWT Decoder",
+        url: "/jwt-decoder",
+      },
     ],
   },
 ];
