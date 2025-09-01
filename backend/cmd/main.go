@@ -40,6 +40,7 @@ func main() {
 	routes.RegisterQRGeneratorRoutes(router)
 	routes.RegisterApiRequestTesterRoutes(router)
 	routes.RegisterJWTDecoderRoutes(router)
+	routes.RegisterHashGeneratorRoutes(router)
 
 	port := config.DomainConfig.Port
 	log.Printf("🚀 Server running on port %d\n", port)

@@ -95,6 +95,10 @@ const navMain: navMain[] = [
         title: "JWT Decoder",
         url: "/jwt-decoder",
       },
+      {
+        title: "Hash Generator",
+        url: "/hash-generator",
+      },
     ],
   },
 ];
