@@ -41,6 +41,7 @@ func main() {
 	routes.RegisterApiRequestTesterRoutes(router)
 	routes.RegisterJWTDecoderRoutes(router)
 	routes.RegisterHashGeneratorRoutes(router)
+	routes.RegisterPDFToolsRoutes(router)
 
 	port := config.DomainConfig.Port
 	log.Printf("🚀 Server running on port %d\n", port)
