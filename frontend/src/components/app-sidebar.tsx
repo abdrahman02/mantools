@@ -61,6 +61,10 @@ const navMain: navMain[] = [
         title: "Text Case Converter",
         url: "/text-case-converter",
       },
+      {
+        title: "PDF Tools",
+        url: "/pdf-tools",
+      },
     ],
   },
   {
