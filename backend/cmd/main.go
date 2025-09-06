@@ -2,7 +2,9 @@ package main
 
 import (
 	"backend/configs"
+	"backend/models"
 	"backend/routes"
+	"backend/seeders"
 	"fmt"
 	"log"
 	"net/http"
@@ -26,6 +28,12 @@ func simpleCors(config configs.Config) gin.HandlerFunc {
 func main() {
 	// load .env
 	config := configs.LoadConfig()
+
+	configs.DBConnect()
+	if err := configs.DB.AutoMigrate(&models.User{}); err != nil { log.Fatal("Failed to migrate database: ", err) }
+
+	seeders.UserSeeder()
+
 	router := gin.Default()
 	if err := router.SetTrustedProxies(nil); err != nil {
 		log.Fatalf("Failed to set trusted proxies: %v", err)
