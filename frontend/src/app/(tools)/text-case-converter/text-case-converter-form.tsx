@@ -10,25 +10,21 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { useAlertMessage } from "@/hooks/use-alert-message";
 import { useGlobalDialog } from "@/hooks/use-global-dialog";
 import { FormEvent, useState } from "react";
 
-interface HashGeneratorRequest {
+interface TextCaseConverterRequest {
     input: string;
-    algorithm: string;
-    costFactor: number;
+    format: string;
 }
 
-export default function HashGeneratorForm() {
-    const initValForm: HashGeneratorRequest = {
+export default function TextCaseConverterForm() {
+    const [form, setForm] = useState<TextCaseConverterRequest>({
         input: "",
-        algorithm: "",
-        costFactor: 10,
-    };
-    const [form, setForm] = useState<HashGeneratorRequest>(initValForm);
+        format: "",
+    });
     const [result, setResult] = useState("");
 
     const { isLoading, showDialog, hideDialog } = useGlobalDialog();
@@ -40,7 +36,7 @@ export default function HashGeneratorForm() {
 
         try {
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/hash-generator`,
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/text-case-converter`,
                 {
                     method: "POST",
                     headers: {
@@ -62,36 +58,31 @@ export default function HashGeneratorForm() {
             showDialog("error");
             createAlert(500, "Something went wrong");
         } finally {
-            setTimeout(() => {
-                hideDialog();
-            }, 1000);
+            hideDialog();
         }
     };
-
-    const algorithmOptions = ["md5", "sha1", "sha256", "bcrypt"];
 
     return (
         <form onSubmit={handleSubmit}>
             <div className="mb-3">
-                <Label>Algorithm</Label>
+                <Label>Format</Label>
                 <Select
-                    value={form.algorithm}
+                    value={form.format}
                     onValueChange={(value) =>
-                        setForm((prev) => ({ ...prev, algorithm: value }))
+                        setForm((prev) => ({ ...prev, format: value }))
                     }
                     disabled={isLoading}
-                    required
                 >
                     <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a algorithm" />
+                        <SelectValue placeholder="Select a format" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            {algorithmOptions.map((opt, i) => (
-                                <SelectItem key={i} value={opt}>
-                                    {String(opt.toUpperCase())}
-                                </SelectItem>
-                            ))}
+                            <SelectItem value="uppercase">UPPERCASE</SelectItem>
+                            <SelectItem value="lowercase">lowercase</SelectItem>
+                            <SelectItem value="capitalize">
+                                Capitalize
+                            </SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
@@ -99,43 +90,26 @@ export default function HashGeneratorForm() {
             <div className="flex flex-row justify-center items-center gap-x-3">
                 <Card className="w-full">
                     <CardContent>
-                        <div>
-                            <Label>Input</Label>
-                            <Textarea
-                                name="input"
-                                rows={12}
-                                value={form.input}
-                                onChange={(e) =>
-                                    setForm((prev) => ({
-                                        ...prev,
-                                        input: e.target.value,
-                                    }))
-                                }
-                                disabled={isLoading}
-                            />
-                        </div>
-                        {form.algorithm === "bcrypt" && (
-                            <div>
-                                <Label>Cost Factor: {form.costFactor}</Label>
-                                <Slider
-                                    min={1}
-                                    max={20}
-                                    step={1}
-                                    value={[form.costFactor]}
-                                    onValueChange={(val) =>
-                                        setForm((prev) => ({
-                                            ...prev,
-                                            costFactor: val[0],
-                                        }))
-                                    }
-                                />
-                            </div>
-                        )}
+                        <Label>Input</Label>
+                        <Textarea
+                            name="input"
+                            rows={12}
+                            value={form.input}
+                            onChange={(e) =>
+                                setForm((prev) => ({
+                                    ...prev,
+                                    input: e.target.value,
+                                }))
+                            }
+                            disabled={isLoading}
+                        />
                     </CardContent>
                     <CardFooter className="flex flex-row justify-between items-center">
                         <Button
                             type="button"
-                            onClick={() => setForm(initValForm)}
+                            onClick={() =>
+                                setForm((prev) => ({ ...prev, input: "" }))
+                            }
                             className="bg-white"
                         >
                             Clear
@@ -146,7 +120,7 @@ export default function HashGeneratorForm() {
                 <Card className="w-full">
                     <CardContent>
                         <Label>Output</Label>
-                        <Textarea rows={17} value={result} readOnly />
+                        <Textarea rows={15} value={result} readOnly />
                     </CardContent>
                 </Card>
             </div>

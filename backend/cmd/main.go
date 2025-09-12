@@ -2,21 +2,22 @@ package main
 
 import (
 	"backend/configs"
-	"backend/models"
 	"backend/routes"
 	"backend/seeders"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
-func simpleCors(config configs.Config) gin.HandlerFunc {
+func simpleCors() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.Writer.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%v", config.DomainConfig.FrontendBaseURL))
+		ctx.Writer.Header().Set("Access-Control-Allow-Origin", os.Getenv("FRONTEND_BASE_URL"))
 		ctx.Writer.Header().Set("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
 		ctx.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization")
+		ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		if ctx.Request.Method == http.MethodOptions {
 			ctx.AbortWithStatus(http.StatusNoContent)
 			return
@@ -26,11 +27,8 @@ func simpleCors(config configs.Config) gin.HandlerFunc {
 }
 
 func main() {
-	// load .env
-	config := configs.LoadConfig()
-
 	configs.DBConnect()
-	if err := configs.DB.AutoMigrate(&models.User{}); err != nil { log.Fatal("Failed to migrate database: ", err) }
+	configs.DBMigrate()
 
 	seeders.UserSeeder()
 
@@ -39,7 +37,7 @@ func main() {
 		log.Fatalf("Failed to set trusted proxies: %v", err)
 	}
 
-	router.Use(simpleCors(config))
+	router.Use(simpleCors())
 
 	routes.RegisterTextFormatRoutes(router)
 	routes.RegisterTextCaseConvRoutes(router)
@@ -50,10 +48,11 @@ func main() {
 	routes.RegisterJWTDecoderRoutes(router)
 	routes.RegisterHashGeneratorRoutes(router)
 	routes.RegisterPDFToolsRoutes(router)
+	routes.RegisterAuthRoutes(router)
 
-	port := config.DomainConfig.Port
-	log.Printf("🚀 Server running on port %d\n", port)
-	if err := router.Run(fmt.Sprintf(":%d", port)); err != nil {
+	port := os.Getenv("PORT")
+	log.Printf("🚀 Server running on port %s\n", port)
+	if err := router.Run(fmt.Sprintf(":%s", port)); err != nil {
 		log.Println("Something went wrong: ", err)
 	}
 }

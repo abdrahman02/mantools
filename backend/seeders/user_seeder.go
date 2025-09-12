@@ -31,5 +31,5 @@ func UserSeeder() {
 		}
 	}
 
-	log.Println("User seeder is completed 🚀")
+	log.Println("✅ User seeder is completed")
 }

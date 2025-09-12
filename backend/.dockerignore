@@ -28,6 +28,10 @@ vendor/
 .env.*
 config.yaml
 config.json
+configs/.env
+configs/.env.*
+configs/config.yaml
+configs/config.json
 
 # IDE & misc
 .vscode/
