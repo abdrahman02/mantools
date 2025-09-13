@@ -22,8 +22,10 @@ export const GlobalDialogProvider = ({ children }: { children: ReactNode }) => {
         setType(type);
     };
     const hideDialog = () => {
-        setIsLoading(false);
-        setType("");
+        setTimeout(() => {
+            setIsLoading(false);
+            setType("");
+        }, 1000);
     };
 
     return (

@@ -70,9 +70,7 @@ export default function ImagesCompressorForm() {
             showDialog("error");
             createAlert(500, "Something went wrong");
         } finally {
-            setTimeout(() => {
-                hideDialog();
-            }, 1000);
+            hideDialog();
         }
     };
 

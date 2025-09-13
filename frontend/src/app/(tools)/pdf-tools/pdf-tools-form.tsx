@@ -39,7 +39,7 @@ export default function PDFToolsForm() {
         if (form.pdfAction === "" || form.files.length < 1) {
             showDialog("error");
             createAlert(400, "Fil the required fields");
-            setTimeout(() => hideDialog(), 1000);
+            hideDialog();
             return;
         }
 
@@ -89,7 +89,7 @@ export default function PDFToolsForm() {
             showDialog("error");
             createAlert(500, "Something went wrong");
         } finally {
-            setTimeout(() => hideDialog(), 1000);
+            hideDialog();
         }
     };
 

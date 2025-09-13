@@ -1,4 +1,17 @@
 services:
+  db:
+    container_name: mantools_postgres_db
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db_mantools
+    ports:
+      - 5432:5432
+    volumes:
+      - mantools_postgres_data:/var/lib/postgresql/data
+
   frontend:
     container_name: mantools_nextjs_app
     build:
@@ -26,3 +39,8 @@ services:
       - ./backend:/app
     env_file:
       - ./backend/configs/.env
+    depends_on:
+      - db
+
+volumes:
+  mantools_postgres_data:

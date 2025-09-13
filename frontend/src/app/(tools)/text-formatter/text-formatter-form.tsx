@@ -15,13 +15,13 @@ import { useAlertMessage } from "@/hooks/use-alert-message";
 import { useGlobalDialog } from "@/hooks/use-global-dialog";
 import { FormEvent, useState } from "react";
 
-interface TextCaseConverterRequest {
+interface TextFormatterRequest {
     input: string;
     format: string;
 }
 
-export default function TextCaseConverterForm() {
-    const [form, setForm] = useState<TextCaseConverterRequest>({
+export default function TextFormatterForm() {
+    const [form, setForm] = useState<TextFormatterRequest>({
         input: "",
         format: "",
     });
@@ -36,7 +36,7 @@ export default function TextCaseConverterForm() {
 
         try {
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/text-case-converter`,
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/text-formatter`,
                 {
                     method: "POST",
                     headers: {
@@ -58,9 +58,7 @@ export default function TextCaseConverterForm() {
             showDialog("error");
             createAlert(500, "Something went wrong");
         } finally {
-            setTimeout(() => {
-                hideDialog();
-            }, 1000);
+            hideDialog();
         }
     };
 
@@ -80,10 +78,13 @@ export default function TextCaseConverterForm() {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectItem value="uppercase">UPPERCASE</SelectItem>
-                            <SelectItem value="lowercase">lowercase</SelectItem>
-                            <SelectItem value="capitalize">
-                                Capitalize
+                            <SelectItem value="json">JSON</SelectItem>
+                            <SelectItem value="xml">XML</SelectItem>
+                            <SelectItem value="sql" disabled>
+                                SQL
+                            </SelectItem>
+                            <SelectItem value="markdown" disabled>
+                                Markdown
                             </SelectItem>
                         </SelectGroup>
                     </SelectContent>
