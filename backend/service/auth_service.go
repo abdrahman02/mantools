@@ -14,6 +14,7 @@ import (
 
 type AuthService interface {
 	Login(email, password string) (*models.User, string, string, error)
+	Logout(refreshToken string) error
 	Refresh(refreshToken string) (*models.User, string, string, error)
 }
 
@@ -63,6 +64,13 @@ func (s *authService) Login(email, password string) (*models.User, string, strin
 	if err := s.tokenRepo.SaveRefreshToken(rt); err != nil { return nil, "", "", err }
 
 	return user, accessToken, refreshToken, nil
+}
+
+func (s *authService) Logout(refreshToken string) error {
+  if refreshToken == "" { return fmt.Errorf("Missing token") }
+
+  hashed := hashToken(refreshToken)
+  return s.tokenRepo.RevokeToken(hashed)
 }
 
 func (s *authService) Refresh(refreshToken string) (*models.User, string, string, error) {

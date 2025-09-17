@@ -1,12 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export const config = {
-    matcher: ["/dashboard"],
+    matcher: ["/dashboard", "/login"],
 };
 
 export default async function middleware(req: NextRequest) {
+    const { pathname } = req.nextUrl;
+    const loginPath = "/login";
     const refresh = req.cookies.get("refresh_token")?.value;
     const access = req.cookies.get("access_token")?.value;
+
+    if (pathname === loginPath && access)
+        return NextResponse.redirect(new URL("/dashboard", req.url));
+
     if (!refresh && !access)
         return NextResponse.redirect(new URL("/login", req.url));
 
@@ -24,8 +30,9 @@ export default async function middleware(req: NextRequest) {
                 },
             );
 
-            if (!res.ok)
+            if (!res.ok) {
                 return NextResponse.redirect(new URL("/login", req.url));
+            }
 
             const setCookie = res.headers.get("set-cookie");
             const response = NextResponse.next();

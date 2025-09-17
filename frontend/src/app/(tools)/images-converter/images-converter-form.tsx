@@ -81,8 +81,8 @@ export default function ImagesConverterForm() {
             <div className="mb-3"></div>
             <div className="flex flex-col justify-center items-center gap-y-3">
                 <Card className="w-full">
-                    <CardContent className="flex flex-row justify-center items-center gap-x-3">
-                        <div className="w-1/2">
+                    <CardContent className="flex flex-col justify-center items-center gap-y-3 sm:gap-x-3 sm:flex-row">
+                        <div className="w-full sm:w-1/2">
                             <Label>Target Convert</Label>
                             <Select
                                 value={form.targetConvert}
@@ -110,7 +110,7 @@ export default function ImagesConverterForm() {
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div className="w-1/2">
+                        <div className="w-full sm:w-1/2">
                             <Label>Images</Label>
                             <Input
                                 id="images"

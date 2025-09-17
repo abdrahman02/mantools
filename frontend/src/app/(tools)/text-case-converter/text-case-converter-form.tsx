@@ -87,7 +87,7 @@ export default function TextCaseConverterForm() {
                     </SelectContent>
                 </Select>
             </div>
-            <div className="flex flex-row justify-center items-center gap-x-3">
+            <div className="flex flex-col justify-center items-center gap-y-3 sm:gap-x-3 sm:flex-row">
                 <Card className="w-full">
                     <CardContent>
                         <Label>Input</Label>

@@ -5,7 +5,6 @@ import (
 	"backend/pkg/helper"
 	"backend/service"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -41,6 +40,28 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 		"access": access,
 	}}
 	helper.SuccessResponse(ctx, "Login successfully", data)
+}
+
+func (h *AuthHandler) Logout(ctx *gin.Context) {
+	rt, err := ctx.Cookie("refresh_token")
+	if err != nil {
+		log.Println("No refresh token", err)
+		helper.UnauthorizedResponse(ctx, "No refresh token", err.Error())
+		return
+	}
+	err = h.service.Logout(rt)
+	if err != nil {
+		log.Println("Failed to revoke your oldest token", err)
+		helper.UnauthorizedResponse(ctx, "Failed to revoke your oldest token", err.Error())
+		return
+	}
+
+	// delete cookie
+	secure := os.Getenv("GIN_MODE") == "release"
+	ctx.SetCookie("access_token", "", -1, "/", os.Getenv("DOMAIN"), secure, true)
+	ctx.SetCookie("refresh_token", "", -1, "/", os.Getenv("DOMAIN"), secure, true)
+
+	helper.SuccessResponse(ctx, "Logout successfully", nil)
 }
 
 func (h *AuthHandler) Refresh(ctx *gin.Context) {
