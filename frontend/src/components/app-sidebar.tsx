@@ -53,7 +53,7 @@ interface Nav {
 
 const navAuth: Nav[] = [
   {
-    title: "Dashboard",
+    title: "Summary",
     url: "/dashboard",
     icon: Gauge,
   },
@@ -120,9 +120,15 @@ const navMain: Nav[] = [
   },
 ];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  accessToken,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & { accessToken?: string }) {
   const pathname = usePathname();
-  const { access } = useAuth();
+  const { access, setAccess } = useAuth();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  React.useEffect(() => setAccess(accessToken ?? null), [accessToken]);
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -146,7 +152,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         {navAuth.length > 0 && access && (
           <SidebarGroup>
-            <SidebarGroupLabel>Admin</SidebarGroupLabel>
+            <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
             <SidebarMenu>
               {navAuth.map((nav) => (
                 <SidebarMenuItem key={nav.title}>

@@ -4,7 +4,9 @@ import AlertMessage from "@/components/alert-message";
 export default function APIRequestTesterPage() {
     return (
         <>
-            <h1 className="text-2xl text-center font-bold">Text Formatter</h1>
+            <h1 className="text-2xl text-center font-bold">
+                API Request Tester
+            </h1>
             <AlertMessage />
             <APIRequestTesterForm />
         </>

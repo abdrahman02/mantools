@@ -3,6 +3,7 @@ package routes
 import (
 	"backend/configs"
 	"backend/handler"
+	middleware "backend/middlewares"
 	"backend/repository"
 	"backend/service"
 
@@ -18,5 +19,6 @@ func RegisterAuthRoutes(router *gin.Engine) {
 	{
 		routerGroup.POST("/login", authHandler.Login)
 		routerGroup.POST("/refresh", authHandler.Refresh)
+		routerGroup.POST("/logout", middleware.AuthMiddleware(), authHandler.Logout)
 	}
 }

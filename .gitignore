@@ -92,6 +92,7 @@ config.json
 /backend/vendor/
 
 ## Environment & Config
+/backend/gcloudconsole*.json
 /backend/.env
 /backend/.env.*
 /backend/config.yaml

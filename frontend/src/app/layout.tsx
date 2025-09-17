@@ -5,6 +5,9 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { GlobalDialogProvider } from "@/contexts/global-dialog-context";
 import { AlertMessageProvider } from "@/contexts/alert-message-context";
 import { AuthProvider } from "@/contexts/auth-context";
+import { GA_TRACKING_ID } from "@/lib/gtag";
+import Script from "next/script";
+import AnalyticsTracker from "@/components/analytics-tracker";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -23,7 +26,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -39,6 +42,26 @@ export default function RootLayout({
           </AlertMessageProvider>
         </AuthProvider>
       </body>
+
+      {/* Google tag (gtag.js) */}
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${GA_TRACKING_ID}', {
+            page_path: window.location.pathname,
+          });
+        `}
+      </Script>
+
+      {/* Analytics tracker */}
+      <AnalyticsTracker />
     </html>
   );
 }

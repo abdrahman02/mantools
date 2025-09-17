@@ -100,9 +100,9 @@ export default function PDFToolsForm() {
             <div className="mb-3"></div>
             <div className="flex flex-col justify-center items-center gap-y-3">
                 <Card className="w-full">
-                    <CardContent className="flex flex-col justify-center items-center gap-x-3">
-                        <div className="w-full flex flex-row justify-center items-center gap-x-3">
-                            <div className="w-1/2">
+                    <CardContent className="">
+                        <div className=" flex flex-col justify-center items-center gap-y-3 sm:gap-x-3 sm:flex-row">
+                            <div className="w-full sm:w-1/2">
                                 <Label>PDF Action</Label>
                                 <Select
                                     value={form.pdfAction}
@@ -137,7 +137,7 @@ export default function PDFToolsForm() {
                                     </SelectContent>
                                 </Select>
                             </div>
-                            <div className="w-1/2">
+                            <div className="w-full sm:w-1/2">
                                 <Label>PDF File(s)</Label>
                                 <Input
                                     id="pdf_file"
@@ -161,8 +161,8 @@ export default function PDFToolsForm() {
                             </div>
                         </div>
                         {form.pdfAction === "split_pdf" && (
-                            <div className="w-full flex flex-row gap-x-3">
-                                <div className="w-1/2">
+                            <div className="flex flex-col gap-y-3 sm:gap-x-3 sm:flex-row">
+                                <div className="w-full sm:w-1/2">
                                     <Label>Started page</Label>
                                     <Input
                                         type="number"
@@ -187,7 +187,7 @@ export default function PDFToolsForm() {
                                         }
                                     />
                                 </div>
-                                <div className="w-1/2">
+                                <div className="w-full sm:w-1/2">
                                     <Label>Ending page</Label>
                                     <Input
                                         type="number"

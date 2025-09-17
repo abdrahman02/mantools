@@ -24,6 +24,7 @@ testdata/
 vendor/
 
 # Env & config
+gcloudconsole*.json
 .env
 .env.*
 config.yaml

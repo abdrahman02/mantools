@@ -32,6 +32,8 @@ func main() {
 
 	seeders.UserSeeder()
 
+	configs.InitAnalyticsClient()
+
 	router := gin.Default()
 	if err := router.SetTrustedProxies(nil); err != nil {
 		log.Fatalf("Failed to set trusted proxies: %v", err)
@@ -49,6 +51,7 @@ func main() {
 	routes.RegisterHashGeneratorRoutes(router)
 	routes.RegisterPDFToolsRoutes(router)
 	routes.RegisterAuthRoutes(router)
+	routes.RegisterDashboardRoutes(router)
 
 	port := os.Getenv("PORT")
 	log.Printf("🚀 Server running on port %s\n", port)
