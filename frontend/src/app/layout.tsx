@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { GlobalDialogProvider } from "@/contexts/global-dialog-context";
 import { AlertMessageProvider } from "@/contexts/alert-message-context";
 import { AuthProvider } from "@/contexts/auth-context";
 import { GA_TRACKING_ID } from "@/lib/gtag";
 import Script from "next/script";
 import AnalyticsTracker from "@/components/analytics-tracker";
+import SidebarWrapper from "./sidebar-wrapper";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -37,7 +37,7 @@ export default async function RootLayout({
         <AuthProvider>
           <AlertMessageProvider>
             <GlobalDialogProvider>
-              <SidebarProvider>{children}</SidebarProvider>
+              <SidebarWrapper>{children}</SidebarWrapper>
             </GlobalDialogProvider>
           </AlertMessageProvider>
         </AuthProvider>

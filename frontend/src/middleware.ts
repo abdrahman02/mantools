@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export const config = {
-    matcher: ["/dashboard", "/login"],
+    matcher: ["/dashboard:path*", "/login"],
 };
 
 export default async function middleware(req: NextRequest) {
@@ -10,8 +10,13 @@ export default async function middleware(req: NextRequest) {
     const refresh = req.cookies.get("refresh_token")?.value;
     const access = req.cookies.get("access_token")?.value;
 
+    // If user has been authenticated and try to access /login -> redirect to /dashboard
     if (pathname === loginPath && access)
         return NextResponse.redirect(new URL("/dashboard", req.url));
+
+    // If user is not authenticated and try to access /login -> continue the request
+    if (pathname === loginPath && !access && !refresh)
+        return NextResponse.next();
 
     if (!refresh && !access)
         return NextResponse.redirect(new URL("/login", req.url));
