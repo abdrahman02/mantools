@@ -165,8 +165,8 @@ export default function HomePage(): React.JSX.Element {
           <h3 className="text-2xl font-extrabold mb-4">Why Mantools?</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Feature
-              title="Fast & Local"
-              desc="Most tools process data in the browser — nothing is sent to the server."
+              title="Fast"
+              desc="Tools are optimized for speed with a lightweight backend."
             />
             <Feature
               title="Free to use"
