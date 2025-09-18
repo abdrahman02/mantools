@@ -1,5 +1,6 @@
 "use client";
 
+import { ThumbsUp } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -49,7 +50,9 @@ export default function HomePage(): React.JSX.Element {
       <header className="max-w-6xl mx-auto px-6 py-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="rounded-md border-4 border-black p-3 bg-main shadow-neobrutal">
-            <span className="text-xl font-extrabold tracking-tight">M</span>
+            <span className="text-xl font-extrabold tracking-tight">
+              <ThumbsUp className="size-6" />
+            </span>
           </div>
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold">Mantools</h1>
