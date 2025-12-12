@@ -1,3 +1,7 @@
+# allow example env files first
+!.env.example
+!/frontend/.env.example
+!/backend/configs/.env.example
 # ================================
 # GLOBAL IGNORE
 # ================================
@@ -19,8 +23,6 @@ Thumbs.db
 *.local
 config.yaml
 config.json
-#exclude .env.example
-!.env.example
 
 # ================================
 # FRONTEND (Next.js)
@@ -55,8 +57,6 @@ config.json
 
 ## env files
 /frontend/.env*
-#exclude .env.example
-!/frontend/.env.example
 
 ## vercel
 /frontend/.vercel
@@ -105,8 +105,6 @@ config.json
 /backend/configs/.env.*
 /backend/configs/config.yaml
 /backend/configs/config.json
-#exclude .env.example
-!/backend/configs/.env.example
 
 ## IDE & Editor
 /backend/.vscode/
