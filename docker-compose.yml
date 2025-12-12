@@ -44,4 +44,4 @@ services:
       - backend
 
 volumes:
-  postgres_data:
+  mantools_postgres_data:
