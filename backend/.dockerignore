@@ -33,6 +33,8 @@ configs/.env
 configs/.env.*
 configs/config.yaml
 configs/config.json
+#exclude .env.example
+!configs/.env.example
 
 # IDE & misc
 .vscode/
