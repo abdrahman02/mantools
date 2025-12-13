@@ -19,6 +19,8 @@ services:
       - ./backend/configs/.env
     environment:
       - DB_HOST=db
+    volumes:
+      - ./backend/gcloudconsole-mantools-472014-c300f78bc6bb.json:/app/gcloudconsole-mantools-472014-c300f78bc6bb.json:ro
     ports:
       - "8080:8080"
     depends_on:
