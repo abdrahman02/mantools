@@ -50,7 +50,9 @@ export default function PopularPageChart({
           <PieChart>
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={(props) => (
+                <ChartTooltipContent {...props} hideLabel />
+              )}
             />
             <Pie
               data={data}
