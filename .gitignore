@@ -1,7 +1,3 @@
-# allow example env files first
-!.env.example
-!/frontend/.env.example
-!/backend/configs/.env.example
 # ================================
 # GLOBAL IGNORE
 # ================================
@@ -114,3 +110,10 @@ config.json
 ## OS-specific
 /backend.DS_Store
 /backendThumbs.db
+
+
+
+# allow example env files first
+!.env.example
+!/frontend/.env.example
+!/backend/configs/.env.example

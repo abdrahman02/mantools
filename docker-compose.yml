@@ -3,10 +3,8 @@ services:
     image: postgres:15
     container_name: mantools_postgres_db
     restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: db_mantools
+    env_file:
+      - ./.env
     volumes:
       - mantools_postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -26,8 +24,8 @@ services:
       - DB_HOST=db
     volumes:
       - ./backend/gcloudconsole-mantools-472014-c300f78bc6bb.json:/app/gcloudconsole-mantools-472014-c300f78bc6bb.json:ro
-    ports:
-      - "8080:8080"
+    expose:
+      - "8080"
     depends_on:
       db:
         condition: service_healthy
@@ -39,13 +37,13 @@ services:
     container_name: mantools_nextjs
     env_file:
       - ./frontend/.env.production
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     depends_on:
       - backend
 
   nginx:
-    image: nginx:latest
+    image: nginx:1.29-alpine
     container_name: mantools_nginx
     ports:
       - "80:80"
