@@ -12,10 +12,11 @@ build
 coverage
 
 # Env & config
-.env*
+.env
+.env.local
+!.env.production
+!.env.production.local
 .vercel
-#exclude .env.example
-!.env.example
 
 # Misc
 .DS_Store
