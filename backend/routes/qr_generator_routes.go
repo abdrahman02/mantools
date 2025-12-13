@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterQRGeneratorRoutes(router *gin.RouterGroup) {
+func RegisterQRGeneratorRoutes(router *gin.Engine) {
 	qrGeneratorService := service.NewQRGeneratorService()
 	qrGeneratorHandler := handler.NewQRGeneratorHandler(qrGeneratorService)
 	routerGroup := router.Group("/qr-generator")

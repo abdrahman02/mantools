@@ -7,7 +7,7 @@ import (
     "github.com/gin-gonic/gin"
 )
 
-func RegisterPDFToolsRoutes(router *gin.RouterGroup) {
+func RegisterPDFToolsRoutes(router *gin.Engine) {
     pdfToolsService := service.NewPDFToolsService()
     pdfToolsHandler := handler.NewPDFToolsHandler(pdfToolsService)
     routerGroup := router.Group("/pdf-tools")

@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterJWTDecoderRoutes(router *gin.RouterGroup) {
+func RegisterJWTDecoderRoutes(router *gin.Engine) {
 	jwtDecoderService := service.NewJWTDecoderService()
 	jwtDecoderHandler := handler.NewJWTDecoderHandler(jwtDecoderService)
 	routerGroup := router.Group("/jwt-decoder")

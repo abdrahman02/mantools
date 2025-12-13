@@ -41,20 +41,17 @@ func main() {
 
 	router.Use(simpleCors())
 
-	api := router.Group("/api")
-	{
-		routes.RegisterTextFormatRoutes(api)
-		routes.RegisterTextCaseConvRoutes(api)
-		routes.RegisterImagesCompressRoutes(api)
-		routes.RegisterImagesConverterRoutes(api)
-		routes.RegisterQRGeneratorRoutes(api)
-		routes.RegisterApiRequestTesterRoutes(api)
-		routes.RegisterJWTDecoderRoutes(api)
-		routes.RegisterHashGeneratorRoutes(api)
-		routes.RegisterPDFToolsRoutes(api)
-		routes.RegisterAuthRoutes(api)
-		routes.RegisterDashboardRoutes(api)
-	}
+	routes.RegisterTextFormatRoutes(router)
+	routes.RegisterTextCaseConvRoutes(router)
+	routes.RegisterImagesCompressRoutes(router)
+	routes.RegisterImagesConverterRoutes(router)
+	routes.RegisterQRGeneratorRoutes(router)
+	routes.RegisterApiRequestTesterRoutes(router)
+	routes.RegisterJWTDecoderRoutes(router)
+	routes.RegisterHashGeneratorRoutes(router)
+	routes.RegisterPDFToolsRoutes(router)
+	routes.RegisterAuthRoutes(router)
+	routes.RegisterDashboardRoutes(router)
 
 	port := os.Getenv("PORT")
 	log.Printf("🚀 Server running on port %s\n", port)

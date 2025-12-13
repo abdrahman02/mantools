@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterTextCaseConvRoutes(router *gin.RouterGroup) {
+func RegisterTextCaseConvRoutes(router *gin.Engine) {
 	textCaseConvService := service.NewTextCaseConvService()
 	textCaseConvHandler := handler.NewTextCaseConvHandler(textCaseConvService)
 

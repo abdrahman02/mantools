@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterTextFormatRoutes(router *gin.RouterGroup) {
+func RegisterTextFormatRoutes(router *gin.Engine) {
 	textFormatterService := service.NewTextFormatterService()
 	textFormatterHandler := handler.NewTextFormatterHandler(textFormatterService)
 	routerGroup := router.Group("/text-formatter")
