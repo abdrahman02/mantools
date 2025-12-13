@@ -32,7 +32,7 @@ services:
       dockerfile: Dockerfile
     container_name: mantools_nextjs
     env_file:
-      - ./frontend/.env
+      - ./frontend/.env.production
     ports:
       - "3000:3000"
     depends_on:
