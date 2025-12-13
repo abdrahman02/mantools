@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterImagesConverterRoutes(router *gin.Engine) {
+func RegisterImagesConverterRoutes(router *gin.RouterGroup) {
 	imageConverterService := service.NewImagesConverterService()
 	imageConverterHandler := handler.NewImagesConverterHandler(imageConverterService)
 	routerGroup := router.Group("/images-converter")

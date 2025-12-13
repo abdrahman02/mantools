@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterAuthRoutes(router *gin.Engine) {
+func RegisterAuthRoutes(router *gin.RouterGroup) {
 	userRepo := repository.NewUserRepository(configs.DB)
 	tokenRepo := repository.NewTokenRepository(configs.DB)
 	authService := service.NewAuthService(userRepo, tokenRepo)

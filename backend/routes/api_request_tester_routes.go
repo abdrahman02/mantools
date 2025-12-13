@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterApiRequestTesterRoutes(router *gin.Engine) {
+func RegisterApiRequestTesterRoutes(router *gin.RouterGroup) {
 	apiRequestTesterService := service.NewApiRequestTesterService()
 	apiRequestTesterHandler := handler.NewApiRequestTesterHandler(apiRequestTesterService)
 	routerGroup := router.Group("/api-request-tester")

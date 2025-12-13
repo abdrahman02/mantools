@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterImagesCompressRoutes(router *gin.Engine) {
+func RegisterImagesCompressRoutes(router *gin.RouterGroup) {
 	imagesCompressService := service.NewImagesCompressService()
 	imagesCompressHandler := handler.NewImagesCompressHandler(imagesCompressService)
 	routerGroup := router.Group("/images-compressor")
