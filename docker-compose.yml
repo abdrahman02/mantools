@@ -47,8 +47,10 @@ services:
     container_name: mantools_nginx
     ports:
       - "80:80"
+      - "433:433"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - frontend
       - backend
