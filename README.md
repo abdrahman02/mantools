@@ -2,7 +2,7 @@
 
 **Mantools** is a versatile toolbox website that provides a variety of online tools such as formatters, converters, generators, and other productivity utilities. All tools are **free**, **fast**, and **easy to use** through a clean web interface.
 
-🌐 **Live Demo:** http://43.133.156.70/
+🌐 **Live Demo:** https://www.mantools.tech/
 
 ---
 
