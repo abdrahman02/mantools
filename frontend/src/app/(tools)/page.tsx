@@ -31,7 +31,7 @@ const MODULES: Module[] = [
     icon: "🔤",
   },
   {
-    id: "image-compressor",
+    id: "images-compressor",
     title: "Image & Media",
     subtitle: "Compressor, Converter, QR Generator",
     icon: "🖼️",
