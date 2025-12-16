@@ -19,8 +19,8 @@ export default async function DashboardPage() {
     return (
         <div className="flex flex-col gap-y-3 sm:gap-x-3 sm:flex-row">
             <div className="w-full sm:w-4/6 flex flex-col gap-y-2">
-                <VisitorChart data={content?.visitors} />
-                <PopularPageChart data={content?.popularPage} />
+                <VisitorChart data={content?.visitors ?? []} />
+                <PopularPageChart data={content?.popularPage ?? []} />
             </div>
             <div className="w-full sm:w-2/6">
                 <MetricCard
